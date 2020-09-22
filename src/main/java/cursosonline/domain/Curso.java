@@ -51,15 +51,15 @@ public class Curso implements Serializable {
     @Setter
     private Integer quantidadeHoras;
 
-    @ManyToMany
     @Getter
+    @ManyToMany
     @JoinTable(name = "curso_aluno",
             joinColumns = @JoinColumn(name = "curso_id"),
             inverseJoinColumns = @JoinColumn(name = "aluno_id"))
     private Set<Pessoa> alunos = new HashSet<>();
 
-    @ManyToMany
     @Getter
+    @ManyToMany
     @JoinTable(name = "curso_instrutor",
             joinColumns = @JoinColumn(name = "curso_id"),
             inverseJoinColumns = @JoinColumn(name = "instrutor_id"))
