@@ -1,6 +1,6 @@
-package cursosonline.repository;
+package cadastrocursos.repository;
 
-import cursosonline.domain.Pessoa;
+import cadastrocursos.domain.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

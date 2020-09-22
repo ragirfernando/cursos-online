@@ -1,7 +1,7 @@
-package cursosonline.service;
+package cadastrocursos.service;
 
-import cursosonline.domain.Curso;
-import cursosonline.repository.CursoRepository;
+import cadastrocursos.repository.CursoRepository;
+import cadastrocursos.domain.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

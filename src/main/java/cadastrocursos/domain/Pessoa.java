@@ -1,4 +1,4 @@
-package cursosonline.domain;
+package cadastrocursos.domain;
 
 import lombok.*;
 

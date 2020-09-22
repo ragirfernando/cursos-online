@@ -8,11 +8,11 @@
         <version>2.3.3.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>cursosonline</groupId>
-    <artifactId>cursosonline</artifactId>
+    <groupId>cadastrocursos</groupId>
+    <artifactId>cadastrocursos</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Cursos online</name>
-    <description>Cadastro de cursos online</description>
+    <name>Cadastro de cursos</name>
+    <description>Cadastro de curso</description>
 
     <properties>
         <java.version>1.8</java.version>

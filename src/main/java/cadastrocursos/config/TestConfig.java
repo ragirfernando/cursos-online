@@ -1,10 +1,11 @@
-package cursosonline.config;
+package cadastrocursos.config;
 
-import cursosonline.domain.Curso;
-import cursosonline.domain.Endereco;
-import cursosonline.domain.Pessoa;
-import cursosonline.repository.CursoRepository;
-import cursosonline.repository.PessoaRepository;
+import cadastrocursos.domain.Endereco;
+import cadastrocursos.enums.StatusCurso;
+import cadastrocursos.repository.CursoRepository;
+import cadastrocursos.repository.PessoaRepository;
+import cadastrocursos.domain.Curso;
+import cadastrocursos.domain.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -39,7 +40,7 @@ public class TestConfig implements CommandLineRunner {
         pessoa4.setEndereco(endereco);
         pessoaRepository.saveAll(Arrays.asList(pessoa1, pessoa2, pessoa3, pessoa4));
 
-        Curso curso = new Curso(null, "Curso teste", new Date(), new Date(), 200.20, 30);
+        Curso curso = new Curso(null, "Curso teste", new Date(), new Date(), 200.20, 30, StatusCurso.INSCRICOES_ABERTAS);
         curso.getAlunos().add(pessoa1);
         curso.getAlunos().add(pessoa2);
 

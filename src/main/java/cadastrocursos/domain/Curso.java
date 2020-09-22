@@ -1,7 +1,8 @@
-package cursosonline.domain;
+package cadastrocursos.domain;
 
 
 import com.sun.istack.NotNull;
+import cadastrocursos.enums.StatusCurso;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -51,6 +52,12 @@ public class Curso implements Serializable {
     @Setter
     private Integer quantidadeHoras;
 
+    @NotNull
+    @Getter
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private StatusCurso statusCurso;
+
     @Getter
     @ManyToMany
     @JoinTable(name = "curso_aluno",
@@ -65,14 +72,19 @@ public class Curso implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "instrutor_id"))
     private Set<Pessoa> instrutor = new HashSet<>();
 
+    @Getter
+    @OneToMany
+    private Set<HorarioAula> horarioAulas = new HashSet<>();
 
-    public Curso(Integer id, String descricao, Date dataInicio, Date dataFim, Double valor, Integer quantidadeHoras) {
+
+    public Curso(Integer id, String descricao, Date dataInicio, Date dataFim, Double valor, Integer quantidadeHoras, StatusCurso statusCurso) {
         this.id = id;
         this.descricao = descricao;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.valor = valor;
         this.quantidadeHoras = quantidadeHoras;
+        this.statusCurso = statusCurso;
     }
 
     @Override

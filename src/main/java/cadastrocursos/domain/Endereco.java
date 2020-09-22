@@ -1,4 +1,4 @@
-package cursosonline.domain;
+package cadastrocursos.domain;
 
 
 import com.sun.istack.internal.NotNull;

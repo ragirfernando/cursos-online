@@ -1,13 +1,13 @@
-package cursosonline;
+package cadastrocursos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CursosOnlineApplication {
+public class CadastroCursosApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CursosOnlineApplication.class, args);
+        SpringApplication.run(CadastroCursosApplication.class, args);
     }
 
 }
