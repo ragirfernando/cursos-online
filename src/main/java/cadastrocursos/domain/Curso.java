@@ -1,6 +1,5 @@
 package cadastrocursos.domain;
 
-
 import com.sun.istack.NotNull;
 import cadastrocursos.enums.StatusCurso;
 import lombok.Getter;
@@ -59,6 +58,12 @@ public class Curso implements Serializable {
     private StatusCurso statusCurso;
 
     @Getter
+    @Setter
+    @OneToOne(cascade = {CascadeType.ALL} ,  orphanRemoval = true)
+    @JoinColumn(name = "horarioAula_id", referencedColumnName = "id")
+    private HorarioAula horarioAula;
+
+    @Getter
     @ManyToMany
     @JoinTable(name = "curso_aluno",
             joinColumns = @JoinColumn(name = "curso_id"),
@@ -71,11 +76,6 @@ public class Curso implements Serializable {
             joinColumns = @JoinColumn(name = "curso_id"),
             inverseJoinColumns = @JoinColumn(name = "instrutor_id"))
     private Set<Pessoa> instrutor = new HashSet<>();
-
-    @Getter
-    @OneToMany
-    private Set<HorarioAula> horarioAulas = new HashSet<>();
-
 
     public Curso(Integer id, String descricao, Date dataInicio, Date dataFim, Double valor, Integer quantidadeHoras, StatusCurso statusCurso) {
         this.id = id;

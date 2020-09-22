@@ -1,6 +1,7 @@
 package cadastrocursos.config;
 
 import cadastrocursos.domain.Endereco;
+import cadastrocursos.domain.HorarioAula;
 import cadastrocursos.enums.StatusCurso;
 import cadastrocursos.repository.CursoRepository;
 import cadastrocursos.repository.PessoaRepository;
@@ -29,7 +30,6 @@ public class TestConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Endereco endereco = new Endereco(null, "77024686", "Quadra 102 sul", "Qi 1", 12, "Plano diretor sul","Palmas", "TO");
 
-
         Pessoa pessoa1 = new Pessoa(null, "Carlos Eduardo", "524145", "53698741241", "63999999999", "54125411", new Date(), "SSP");
         Pessoa pessoa2 = new Pessoa(null, "Carlos Eduardo", "524145", "53698741241", "63999999999", "54125411", new Date(), "SSP");
         Pessoa pessoa3 = new Pessoa(null, "Carlos Eduardo", "524145", "53698741241", "63999999999", "54125411", new Date(), "SSP");
@@ -41,11 +41,14 @@ public class TestConfig implements CommandLineRunner {
         pessoaRepository.saveAll(Arrays.asList(pessoa1, pessoa2, pessoa3, pessoa4));
 
         Curso curso = new Curso(null, "Curso teste", new Date(), new Date(), 200.20, 30, StatusCurso.INSCRICOES_ABERTAS);
+        HorarioAula horarioAula1 = new HorarioAula(null, new Date(), new Date(), new Date(), new Date(), new Date());
         curso.getAlunos().add(pessoa1);
         curso.getAlunos().add(pessoa2);
 
         curso.getInstrutor().add(pessoa3);
         curso.getInstrutor().add(pessoa4);
+
+        curso.setHorarioAula(horarioAula1);
 
         cursoRepository.save(curso);
 

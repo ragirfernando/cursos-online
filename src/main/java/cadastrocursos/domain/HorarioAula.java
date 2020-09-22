@@ -1,14 +1,13 @@
 package cadastrocursos.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,6 +34,4 @@ public class HorarioAula implements Serializable {
 
     @Temporal(TemporalType.TIME)
     private Date fimAula;
-
-
 }

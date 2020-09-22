@@ -17,4 +17,7 @@ public class CursoService {
         List<Curso> cursos = cursoRepository.findAll();
         return cursos;
     }
+
+
+
 }
