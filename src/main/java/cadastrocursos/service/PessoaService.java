@@ -1,5 +1,6 @@
 package cadastrocursos.service;
 
+import cadastrocursos.domain.Curso;
 import cadastrocursos.domain.Pessoa;
 import cadastrocursos.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,5 +16,9 @@ public class PessoaService {
 
     public List<Pessoa> listarPessoas(){
         return pessoaRepository.findAll();
+    }
+
+    public Pessoa inserirPessoa(Pessoa pessoa){
+        return pessoaRepository.save(pessoa);
     }
 }

@@ -22,4 +22,9 @@ public class CursoService {
         return cursoRepository.save(curso);
     }
 
+    public Curso listarCurso(Integer id){
+        return cursoRepository.getOne(id);
+    }
+
+
 }
