@@ -4,10 +4,7 @@ import cadastrocursos.domain.Curso;
 import cadastrocursos.service.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +15,12 @@ public class CursoController {
     @Autowired
     private CursoService cursoService;
 
-
+    @PostMapping(value = "/inserirCurso")
+    public ResponseEntity<Curso> inserirCurso(@RequestBody Curso curso){
+        System.out.println(curso);
+        curso =  cursoService.inserirCurso(curso);
+        return ResponseEntity.ok().body(curso);
+    }
 
     @GetMapping(value = "/cursos")
     public ResponseEntity<List<Curso>> listarCursos(){

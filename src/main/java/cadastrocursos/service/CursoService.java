@@ -18,6 +18,8 @@ public class CursoService {
         return cursos;
     }
 
-
+    public Curso inserirCurso(Curso curso){
+        return cursoRepository.save(curso);
+    }
 
 }
