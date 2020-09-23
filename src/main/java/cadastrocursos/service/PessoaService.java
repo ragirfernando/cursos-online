@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PessoaService {
@@ -19,6 +20,11 @@ public class PessoaService {
 
     public List<Pessoa> listarPessoas() {
         return pessoaRepository.findAll();
+    }
+
+    public Pessoa listarPessoasId(Integer id) {
+        Optional<Pessoa> retorno = pessoaRepository.findById(id);
+        return retorno.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Pessoa inserirPessoa(Pessoa pessoa) {

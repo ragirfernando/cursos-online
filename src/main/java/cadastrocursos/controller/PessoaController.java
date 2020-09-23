@@ -1,8 +1,6 @@
 package cadastrocursos.controller;
 
-import cadastrocursos.domain.Curso;
 import cadastrocursos.domain.Pessoa;
-import cadastrocursos.service.CursoService;
 import cadastrocursos.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +21,16 @@ public class PessoaController {
         return ResponseEntity.ok().body(pessoas);
     }
 
+    @GetMapping(value = "/listarPessoasId/{id}")
+    public ResponseEntity<Pessoa> listarPessoasId(@PathVariable Integer id){
+        Pessoa pessoa = pessoaService.listarPessoasId(id);
+        return ResponseEntity.ok().body(pessoa);
+    }
+
     @PostMapping(value = "/inserirPessoa")
     public ResponseEntity<Pessoa> inserirPessoa(@RequestBody Pessoa pessoa){
         pessoa = pessoaService.inserirPessoa(pessoa);
-        return ResponseEntity.ok().body(pessoa);
+        return  ResponseEntity.ok().body(pessoa);
     }
 
     @PutMapping(value = "/atualizarPessoa")
