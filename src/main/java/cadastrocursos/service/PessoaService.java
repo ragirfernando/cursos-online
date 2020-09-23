@@ -20,4 +20,16 @@ public class PessoaService {
     public Pessoa inserirPessoa(Pessoa pessoa){
         return pessoaRepository.save(pessoa);
     }
+
+    public Pessoa atualizarPessoa(Pessoa pessoa){
+        return pessoaRepository.save(pessoa);
+    }
+
+    public void deletarPessoa(Integer id){
+        try {
+            pessoaRepository.deleteById(id);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
+    }
 }

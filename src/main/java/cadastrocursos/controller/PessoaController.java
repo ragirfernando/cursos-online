@@ -29,4 +29,16 @@ public class PessoaController {
         return ResponseEntity.ok().body(pessoa);
     }
 
+    @PutMapping(value = "/atualizarPessoa")
+    public ResponseEntity<Pessoa> atualizarPessoa(@RequestBody Pessoa pessoa){
+        pessoa = pessoaService.atualizarPessoa(pessoa);
+        return ResponseEntity.ok().body(pessoa);
+    }
+
+
+    @DeleteMapping(value = "/deletarPessoaId/{id}")
+    public void deletarPessoa(@PathVariable Integer id){
+        pessoaService.deletarPessoa(id);
+
+    }
 }
