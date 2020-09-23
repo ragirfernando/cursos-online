@@ -23,8 +23,13 @@ public class PessoaService {
     }
 
     public Pessoa listarPessoasId(Integer id) {
-        Optional<Pessoa> retorno = pessoaRepository.findById(id);
-        return retorno.orElseThrow(() -> new ResourceNotFoundException(id));
+        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
+        return pessoa.orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    public Pessoa listarPessoasCPF(String cpf) {
+        Optional<Pessoa> pessoa = Optional.ofNullable(pessoaRepository.findByCpf(cpf));
+        return pessoa.orElseThrow(() -> new ResourceNotFoundException(cpf));
     }
 
     public Pessoa inserirPessoa(Pessoa pessoa) {

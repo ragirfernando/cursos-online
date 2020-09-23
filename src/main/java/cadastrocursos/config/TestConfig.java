@@ -31,9 +31,9 @@ public class TestConfig implements CommandLineRunner {
         Endereco endereco = new Endereco(null, "77024686", "Quadra 102 sul", "Qi 1", 12, "Plano diretor sul","Palmas", "TO");
 
         Pessoa pessoa1 = new Pessoa(null, "Carlos Eduardo", "524145", "53698741241", "63999999999", "54125411", new Date(), "SSP");
-        Pessoa pessoa2 = new Pessoa(null, "Carlos Eduardo", "524145", "53698741241", "63999999999", "54125411", new Date(), "SSP");
-        Pessoa pessoa3 = new Pessoa(null, "Carlos Eduardo", "524145", "53698741241", "63999999999", "54125411", new Date(), "SSP");
-        Pessoa pessoa4 = new Pessoa(null, "Carlos Eduardo", "524145", "53698741241", "63999999999", "54125411", new Date(), "SSP");
+        Pessoa pessoa2 = new Pessoa(null, "Carlos Eduardo", "524145", "53698741242", "63999999999", "54125411", new Date(), "SSP");
+        Pessoa pessoa3 = new Pessoa(null, "Carlos Eduardo", "524145", "53698741243", "63999999999", "54125411", new Date(), "SSP");
+        Pessoa pessoa4 = new Pessoa(null, "Carlos Eduardo", "524145", "53698741244", "63999999999", "54125411", new Date(), "SSP");
         pessoa1.setEndereco(endereco);
         pessoa2.setEndereco(endereco);
         pessoa3.setEndereco(endereco);

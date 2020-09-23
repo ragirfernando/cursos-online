@@ -27,6 +27,12 @@ public class PessoaController {
         return ResponseEntity.ok().body(pessoa);
     }
 
+    @GetMapping(value = "/listarPessoasCPF/{cpf}")
+    public ResponseEntity<Pessoa> listarPessoasCPF(@PathVariable String cpf){
+        Pessoa pessoa = pessoaService.listarPessoasCPF(cpf);
+        return ResponseEntity.ok().body(pessoa);
+    }
+
     @PostMapping(value = "/inserirPessoa")
     public ResponseEntity<Pessoa> inserirPessoa(@RequestBody Pessoa pessoa){
         pessoa = pessoaService.inserirPessoa(pessoa);
