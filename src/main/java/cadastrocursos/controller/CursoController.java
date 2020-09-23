@@ -31,8 +31,11 @@ public class CursoController {
         Curso curso = cursoService.listarCurso(idCurso);
         pessoa =  pessoaService.inserirPessoa(pessoa);
         curso.getAlunos().add(pessoa);
+        inserirCurso(curso);
         return ResponseEntity.ok().body(pessoa);
     }
+
+
 
     @GetMapping(value = "/cursos")
     public ResponseEntity<List<Curso>> listarCursos(){

@@ -1,6 +1,5 @@
 package cadastrocursos.service;
 
-import cadastrocursos.domain.Curso;
 import cadastrocursos.domain.Pessoa;
 import cadastrocursos.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
