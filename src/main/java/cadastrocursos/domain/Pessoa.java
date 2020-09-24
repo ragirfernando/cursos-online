@@ -29,6 +29,8 @@ public class Pessoa implements Serializable {
 
     private String rg;
 
+    private String email;
+
     private Date dataNascimento;
 
     private String orgaoEmissor;
@@ -38,13 +40,14 @@ public class Pessoa implements Serializable {
     private Endereco endereco;
 
 
-    public Pessoa(Integer id, String nome, String matricula, String cpf, String celular, String rg, Date dataNascimento, String orgaoEmissor) {
+    public Pessoa(Integer id, String nome, String matricula, String cpf, String celular, String rg, String email, Date dataNascimento, String orgaoEmissor) {
         this.id = id;
         this.nome = nome;
         this.matricula = matricula;
         this.cpf = cpf;
         this.celular = celular;
         this.rg = rg;
+        this.email = email;
         this.dataNascimento = dataNascimento;
         this.orgaoEmissor = orgaoEmissor;
     }

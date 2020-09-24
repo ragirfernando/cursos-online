@@ -24,12 +24,12 @@ public class PessoaService {
 
     public Pessoa listarPessoasId(Integer id) {
         Optional<Pessoa> pessoa = pessoaRepository.findById(id);
-        return pessoa.orElseThrow(() -> new ResourceNotFoundException(id));
+        return pessoa.orElseThrow(() -> new ResourceNotFoundException("Não esta cadastrado no banco de dados"));
     }
 
     public Pessoa listarPessoasCPF(String cpf) {
         Optional<Pessoa> pessoa = Optional.ofNullable(pessoaRepository.findByCpf(cpf));
-        return pessoa.orElseThrow(() -> new ResourceNotFoundException(cpf));
+        return pessoa.orElseThrow(() -> new ResourceNotFoundException("Não esta cadastrado no banco de dados"));
     }
 
     public Pessoa inserirPessoa(Pessoa pessoa) {
@@ -44,7 +44,7 @@ public class PessoaService {
         try {
             pessoaRepository.deleteById(id);
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            throw new ResourceNotFoundException(id);
+            throw new ResourceNotFoundException("Não esta cadastrado no banco de dados");
         } catch (DataIntegrityViolationException dataIntegrityViolationException) {
             throw new DatabaseException("Não pode ser deletada, esta vinculada a um curso");
         }
