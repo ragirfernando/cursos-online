@@ -1,12 +1,11 @@
 package cadastrocursos.config;
 
-import cadastrocursos.domain.Endereco;
-import cadastrocursos.domain.HorarioAula;
+import cadastrocursos.domain.*;
 import cadastrocursos.enums.StatusCurso;
 import cadastrocursos.repository.CursoRepository;
 import cadastrocursos.repository.PessoaRepository;
-import cadastrocursos.domain.Curso;
-import cadastrocursos.domain.Pessoa;
+import cadastrocursos.repository.UsuarioRepository;
+import cadastrocursos.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +26,16 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @Override
     public void run(String... args) throws Exception {
+        Usuario usuario1 = new Usuario(null, "ragir", "$2a$10$O322Z0Oru9vtqVqOfNGLCeOULhLuGK5CN1BB/kcjwoR1Pcy2wyv4W", false);
+        Usuario usuario2 = new Usuario(null, "admin", "$2a$10$W6o7gFaxjjCUpqbNbm/Kieu8fKpbZucPrRAe8Yv1Ivo0R.iDDnhUK", true);
+
+        usuarioRepository.saveAll(Arrays.asList(usuario1, usuario2));
+
         Endereco endereco = new Endereco(null, "77024686", "Quadra 102 sul", "Qi 1", 12, "Plano diretor sul","Palmas", "TO");
 
         Pessoa pessoa1 = new Pessoa(null, "Carlos Eduardo", "524145", "53698741241", "63999999999", "54125411", "carlo@gmail", LocalDate.now(), "SSP");
