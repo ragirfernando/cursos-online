@@ -6,6 +6,7 @@ import cadastrocursos.service.CursoService;
 import cadastrocursos.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -22,6 +23,7 @@ public class CursoController {
     @Autowired
     private PessoaService pessoaService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/cursos")
     public ResponseEntity<List<Curso>> listarCursos() {
         List<Curso> cursos = cursoService.listarCursos();
