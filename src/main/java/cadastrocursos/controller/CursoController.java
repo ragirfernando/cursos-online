@@ -23,26 +23,25 @@ public class CursoController {
     private PessoaService pessoaService;
 
     @GetMapping(value = "/cursos")
-    public ResponseEntity<List<Curso>> listarCursos(){
+    public ResponseEntity<List<Curso>> listarCursos() {
         List<Curso> cursos = cursoService.listarCursos();
         return ResponseEntity.ok().body(cursos);
     }
 
     @GetMapping(value = "/listarCursosData/{dataInicio}/{dataFim}")
     public ResponseEntity<List<Curso>> listarCursosData(@PathVariable String dataInicio, @PathVariable String dataFim) throws ParseException {
-
         List<Curso> cursos = cursoService.listarCursosData(LocalDate.parse(dataInicio), LocalDate.parse(dataFim));
         return ResponseEntity.ok().body(cursos);
     }
 
     @PostMapping(value = "/inserirCurso")
-    public ResponseEntity<Curso> inserirCurso(@RequestBody Curso curso){
-        curso =  cursoService.inserirCurso(curso);
+    public ResponseEntity<Curso> inserirCurso(@RequestBody Curso curso) {
+        curso = cursoService.inserirCurso(curso);
         return ResponseEntity.ok().body(curso);
     }
 
     @PostMapping(value = "/inserirAluno/{idCurso}/{idAluno}")
-    public ResponseEntity<String> inserirAluno(@PathVariable Integer idCurso, @PathVariable Integer idAluno){
+    public ResponseEntity<String> inserirAluno(@PathVariable Integer idCurso, @PathVariable Integer idAluno) {
         Curso curso = cursoService.listarCurso(idCurso);
         Pessoa pessoa = pessoaService.listarPessoasId(idAluno);
         curso.getAlunos().add(pessoa);
@@ -51,7 +50,7 @@ public class CursoController {
     }
 
     @PostMapping(value = "/inserirInstrutor/{idCurso}/{idInstrutor}")
-    public ResponseEntity<String> inserirInstrutor(@PathVariable Integer idCurso, @PathVariable Integer idInstrutor){
+    public ResponseEntity<String> inserirInstrutor(@PathVariable Integer idCurso, @PathVariable Integer idInstrutor) {
         Curso curso = cursoService.listarCurso(idCurso);
         Pessoa pessoa = pessoaService.listarPessoasId(idInstrutor);
         curso.getInstrutor().add(pessoa);
@@ -60,7 +59,7 @@ public class CursoController {
     }
 
     @DeleteMapping(value = "/deletarCurso/{idCurso}")
-    public ResponseEntity<String> deletarCurso(@PathVariable Integer idCurso){
+    public ResponseEntity<String> deletarCurso(@PathVariable Integer idCurso) {
         String mensagem = cursoService.deletarCurso(idCurso);
         return ResponseEntity.ok().body(mensagem);
     }

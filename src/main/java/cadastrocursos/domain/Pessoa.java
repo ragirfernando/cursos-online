@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @ToString
@@ -31,7 +32,7 @@ public class Pessoa implements Serializable {
 
     private String email;
 
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 
     private String orgaoEmissor;
 
@@ -40,7 +41,7 @@ public class Pessoa implements Serializable {
     private Endereco endereco;
 
 
-    public Pessoa(Integer id, String nome, String matricula, String cpf, String celular, String rg, String email, Date dataNascimento, String orgaoEmissor) {
+    public Pessoa(Integer id, String nome, String matricula, String cpf, String celular, String rg, String email, LocalDate dataNascimento, String orgaoEmissor) {
         this.id = id;
         this.nome = nome;
         this.matricula = matricula;
