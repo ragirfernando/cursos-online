@@ -5,10 +5,11 @@ import cadastrocursos.domain.Pessoa;
 import cadastrocursos.service.CursoService;
 import cadastrocursos.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -24,6 +25,13 @@ public class CursoController {
     @GetMapping(value = "/cursos")
     public ResponseEntity<List<Curso>> listarCursos(){
         List<Curso> cursos = cursoService.listarCursos();
+        return ResponseEntity.ok().body(cursos);
+    }
+
+    @GetMapping(value = "/listarCursosData/{dataInicio}/{dataFim}")
+    public ResponseEntity<List<Curso>> listarCursosData(@PathVariable String dataInicio, @PathVariable String dataFim) throws ParseException {
+
+        List<Curso> cursos = cursoService.listarCursosData(LocalDate.parse(dataInicio), LocalDate.parse(dataFim));
         return ResponseEntity.ok().body(cursos);
     }
 
@@ -49,6 +57,12 @@ public class CursoController {
         curso.getInstrutor().add(pessoa);
         inserirCurso(curso);
         return ResponseEntity.ok().body(curso.getDescricao());
+    }
+
+    @DeleteMapping(value = "/deletarCurso/{idCurso}")
+    public ResponseEntity<String> deletarCurso(@PathVariable Integer idCurso){
+        String mensagem = cursoService.deletarCurso(idCurso);
+        return ResponseEntity.ok().body(mensagem);
     }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -40,7 +41,7 @@ public class TestConfig implements CommandLineRunner {
         pessoa4.setEndereco(endereco);
         pessoaRepository.saveAll(Arrays.asList(pessoa1, pessoa2, pessoa3, pessoa4));
 
-        Curso curso = new Curso(null, "Curso teste", new Date(), new Date(), 200.20, 30, StatusCurso.INSCRICOES_ABERTAS);
+        Curso curso = new Curso(null, "Curso teste", LocalDate.now(), LocalDate.now(), 200.20, 30, StatusCurso.INSCRICOES_ABERTAS);
         HorarioAula horarioAula1 = new HorarioAula(null, new Date(), new Date(), new Date(), new Date(), new Date());
         curso.getAlunos().add(pessoa1);
         curso.getAlunos().add(pessoa2);

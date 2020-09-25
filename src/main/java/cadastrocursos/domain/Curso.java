@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 
 @ToString
@@ -32,14 +33,12 @@ public class Curso implements Serializable {
     @NotNull
     @Getter
     @Setter
-    @Temporal(TemporalType.DATE)
-    private Date dataInicio;
+    private LocalDate dataInicio;
 
     @NotNull
     @Getter
     @Setter
-    @Temporal(TemporalType.DATE)
-    private Date dataFim;
+    private LocalDate dataFim;
 
     @NotNull
     @Getter
@@ -77,7 +76,7 @@ public class Curso implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "instrutor_id"))
     private Set<Pessoa> instrutor = new HashSet<>();
 
-    public Curso(Integer id, String descricao, Date dataInicio, Date dataFim, Double valor, Integer quantidadeHoras, StatusCurso statusCurso) {
+    public Curso(Integer id, String descricao, LocalDate dataInicio, LocalDate dataFim, Double valor, Integer quantidadeHoras, StatusCurso statusCurso) {
         this.id = id;
         this.descricao = descricao;
         this.dataInicio = dataInicio;
