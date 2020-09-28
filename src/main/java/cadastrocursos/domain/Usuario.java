@@ -25,7 +25,6 @@ public class Usuario implements Serializable {
 
     private String username;
 
-    @JsonIgnore
     private String password;
 
     private boolean admin;
