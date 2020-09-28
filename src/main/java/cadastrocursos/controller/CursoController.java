@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/curso")
+@RequestMapping(value = "/v1")
 public class CursoController {
 
     @Autowired
@@ -23,26 +23,26 @@ public class CursoController {
     @Autowired
     private PessoaService pessoaService;
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(value = "/cursos")
+    //@PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = "/admin/curso/cursos")
     public ResponseEntity<List<Curso>> listarCursos() {
         List<Curso> cursos = cursoService.listarCursos();
         return ResponseEntity.ok().body(cursos);
     }
 
-    @GetMapping(value = "/listarCursosData/{dataInicio}/{dataFim}")
+    @GetMapping(value = "/protected/curso/listarCursosData/{dataInicio}/{dataFim}")
     public ResponseEntity<List<Curso>> listarCursosData(@PathVariable String dataInicio, @PathVariable String dataFim) throws ParseException {
         List<Curso> cursos = cursoService.listarCursosData(LocalDate.parse(dataInicio), LocalDate.parse(dataFim));
         return ResponseEntity.ok().body(cursos);
     }
 
-    @PostMapping(value = "/inserirCurso")
+    @PostMapping(value = "/admin/curso/inserirCurso")
     public ResponseEntity<Curso> inserirCurso(@RequestBody Curso curso) {
         curso = cursoService.inserirCurso(curso);
         return ResponseEntity.ok().body(curso);
     }
 
-    @PostMapping(value = "/inserirAluno/{idCurso}/{idAluno}")
+    @PostMapping(value = "/protected/curso/inserirAluno/{idCurso}/{idAluno}")
     public ResponseEntity<String> inserirAluno(@PathVariable Integer idCurso, @PathVariable Integer idAluno) {
         Curso curso = cursoService.listarCurso(idCurso);
         Pessoa pessoa = pessoaService.listarPessoasId(idAluno);
@@ -51,7 +51,7 @@ public class CursoController {
         return ResponseEntity.ok().body(curso.getDescricao());
     }
 
-    @PostMapping(value = "/inserirInstrutor/{idCurso}/{idInstrutor}")
+    @PostMapping(value = "/protected/curso/inserirInstrutor/{idCurso}/{idInstrutor}")
     public ResponseEntity<String> inserirInstrutor(@PathVariable Integer idCurso, @PathVariable Integer idInstrutor) {
         Curso curso = cursoService.listarCurso(idCurso);
         Pessoa pessoa = pessoaService.listarPessoasId(idInstrutor);
@@ -60,7 +60,7 @@ public class CursoController {
         return ResponseEntity.ok().body(curso.getDescricao());
     }
 
-    @DeleteMapping(value = "/deletarCurso/{idCurso}")
+    @DeleteMapping(value = "/admin/curso/deletarCurso/{idCurso}")
     public ResponseEntity<String> deletarCurso(@PathVariable Integer idCurso) {
         String mensagem = cursoService.deletarCurso(idCurso);
         return ResponseEntity.ok().body(mensagem);
