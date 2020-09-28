@@ -16,11 +16,11 @@ import java.io.IOException;
 
 import static cadastrocursos.config.SecurityConstants.*;
 
-public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UsuarioService usuarioService;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UsuarioService usuarioService) {
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, UsuarioService usuarioService) {
         super(authenticationManager);
         this.usuarioService = usuarioService;
     }

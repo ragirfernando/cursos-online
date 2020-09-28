@@ -20,11 +20,11 @@ import java.util.Date;
 
 import static cadastrocursos.config.SecurityConstants.*;
 
-public class JwtTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
 
-    public JwtTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
@@ -56,3 +56,10 @@ public class JwtTAuthenticationFilter extends UsernamePasswordAuthenticationFilt
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
     }
 }
+// http.cors().and().csrf().disable().authorizeRequests()
+//         .antMatchers(HttpMethod.GET, SIGN_UP_URL).permitAll()
+//         .antMatchers("/*/protected/**").hasRole("USER")
+//         .antMatchers("/*/admin/**").hasRole("ADMIN")
+//         .and()
+//         .addFilter(new JwtTAuthenticationFilter(authenticationManager()))
+//         .addFilter(new JwtAuthorizationFilter(authenticationManager(), usuarioService));

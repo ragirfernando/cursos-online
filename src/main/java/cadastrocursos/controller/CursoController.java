@@ -23,7 +23,6 @@ public class CursoController {
     @Autowired
     private PessoaService pessoaService;
 
-    //@PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/admin/curso/cursos")
     public ResponseEntity<List<Curso>> listarCursos() {
         List<Curso> cursos = cursoService.listarCursos();
