@@ -27,7 +27,9 @@ public class UsuarioService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = Optional.ofNullable(usuarioRepository.findByUsername(username)).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+        Usuario usuario = Optional.ofNullable(usuarioRepository.findByUsername(username))
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
         List<String> perfis = addListaPerfis(usuario.getPerfis());
         List<GrantedAuthority> roles = createAuthorityList(perfis);
         return new User(usuario.getUsername(), usuario.getPassword(), roles);
@@ -49,11 +51,4 @@ public class UsuarioService implements UserDetailsService {
         return authorities;
     }
 
-    /*@Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = Optional.ofNullable(usuarioRepository.findByUsername(username)).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-        List<GrantedAuthority> authorityListAdmin = AuthorityUtils.createAuthorityList(user, admin);
-        List<GrantedAuthority> authorityListUser = AuthorityUtils.createAuthorityList(user);
-        return new User(usuario.getUsername(), usuario.getPassword(), usuario.isAdmin() ? authorityListAdmin : authorityListUser);
-    }*/
 }

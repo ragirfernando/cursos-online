@@ -6,7 +6,6 @@ import cadastrocursos.service.CursoService;
 import cadastrocursos.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -14,14 +13,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1")
+@RequestMapping(value = "/admins")
 public class CursoController {
 
     @Autowired
     private CursoService cursoService;
 
-    @Autowired
-    private PessoaService pessoaService;
 
     @GetMapping(value = "/admin/curso/cursos")
     public ResponseEntity<List<Curso>> listarCursos() {
@@ -29,7 +26,7 @@ public class CursoController {
         return ResponseEntity.ok().body(cursos);
     }
 
-    @GetMapping(value = "/protected/curso/listarCursosData/{dataInicio}/{dataFim}")
+    @GetMapping(value = "/admin/curso/listarCursosData/{dataInicio}/{dataFim}")
     public ResponseEntity<List<Curso>> listarCursosData(@PathVariable String dataInicio, @PathVariable String dataFim) throws ParseException {
         List<Curso> cursos = cursoService.listarCursosData(LocalDate.parse(dataInicio), LocalDate.parse(dataFim));
         return ResponseEntity.ok().body(cursos);
@@ -41,28 +38,15 @@ public class CursoController {
         return ResponseEntity.ok().body(curso);
     }
 
-    @PostMapping(value = "/protected/curso/inserirAluno/{idCurso}/{idAluno}")
-    public ResponseEntity<String> inserirAluno(@PathVariable Integer idCurso, @PathVariable Integer idAluno) {
-        Curso curso = cursoService.listarCurso(idCurso);
-        Pessoa pessoa = pessoaService.listarPessoasId(idAluno);
-        curso.getAlunos().add(pessoa);
-        inserirCurso(curso);
-        return ResponseEntity.ok().body(curso.getDescricao());
-    }
-
-    @PostMapping(value = "/protected/curso/inserirInstrutor/{idCurso}/{idInstrutor}")
-    public ResponseEntity<String> inserirInstrutor(@PathVariable Integer idCurso, @PathVariable Integer idInstrutor) {
-        Curso curso = cursoService.listarCurso(idCurso);
-        Pessoa pessoa = pessoaService.listarPessoasId(idInstrutor);
-        curso.getInstrutor().add(pessoa);
-        inserirCurso(curso);
-        return ResponseEntity.ok().body(curso.getDescricao());
-    }
-
     @DeleteMapping(value = "/admin/curso/deletarCurso/{idCurso}")
     public ResponseEntity<String> deletarCurso(@PathVariable Integer idCurso) {
         String mensagem = cursoService.deletarCurso(idCurso);
         return ResponseEntity.ok().body(mensagem);
     }
 
+    @PutMapping(value = "/admin/curso/atualizarCurso")
+    public ResponseEntity<Curso> atualizarCurso(@RequestBody Curso curso) {
+        curso = cursoService.atualizarCurso(curso);
+        return ResponseEntity.ok().body(curso);
+    }
 }

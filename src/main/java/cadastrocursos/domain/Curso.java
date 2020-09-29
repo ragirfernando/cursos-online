@@ -59,11 +59,10 @@ public class Curso implements Serializable {
     @Getter
     @Setter
     @OneToOne(cascade = {CascadeType.ALL} ,  orphanRemoval = true)
-    @JoinColumn(name = "horarioAula_id", referencedColumnName = "id")
     private HorarioAula horarioAula;
 
     @Getter
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(name = "curso_aluno",
             joinColumns = @JoinColumn(name = "curso_id"),
             inverseJoinColumns = @JoinColumn(name = "aluno_id"))

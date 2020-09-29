@@ -29,13 +29,9 @@ public class Usuario implements Serializable {
 
     @Getter
     @Setter
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
     private Pessoa pessoa;
-
-    @Getter
-    @Setter
-    private boolean admin;
 
     @Getter
     @ManyToMany(fetch = FetchType.EAGER)
@@ -44,10 +40,9 @@ public class Usuario implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "perfil_id"))
     private Set<Perfil> perfis = new HashSet<>();
 
-    public Usuario(Integer id, String username, String password, boolean admin) {
+    public Usuario(Integer id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.admin = admin;
     }
 }

@@ -9,44 +9,44 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/pessoa")
+@RequestMapping(value = "/pessoas")
 public class PessoaController {
 
     @Autowired
     private PessoaService pessoaService;
 
-    @GetMapping(value = "/pessoas")
+    @GetMapping(value = "pessoa/pessoas")
     public ResponseEntity<List<Pessoa>> listarPessoas(){
         List<Pessoa> pessoas = pessoaService.listarPessoas();
         return ResponseEntity.ok().body(pessoas);
     }
 
-    @GetMapping(value = "/listarPessoasId/{id}")
+    @GetMapping(value = "/pessoa/listarPessoasId/{id}")
     public ResponseEntity<Pessoa> listarPessoasId(@PathVariable Integer id){
         Pessoa pessoa = pessoaService.listarPessoasId(id);
         return ResponseEntity.ok().body(pessoa);
     }
 
-    @GetMapping(value = "/listarPessoasCPF/{cpf}")
+    @GetMapping(value = "/pessoa/listarPessoasCPF/{cpf}")
     public ResponseEntity<Pessoa> listarPessoasCPF(@PathVariable String cpf){
         Pessoa pessoa = pessoaService.listarPessoasCPF(cpf);
         return ResponseEntity.ok().body(pessoa);
     }
 
-    @PostMapping(value = "/inserirPessoa")
+    @PostMapping(value = "/pessoa/inserirPessoa")
     public ResponseEntity<Pessoa> inserirPessoa(@RequestBody Pessoa pessoa){
         pessoa = pessoaService.inserirPessoa(pessoa);
         return  ResponseEntity.ok().body(pessoa);
     }
 
-    @PutMapping(value = "/atualizarPessoa")
+    @PutMapping(value = "/pessoa/atualizarPessoa")
     public ResponseEntity<Pessoa> atualizarPessoa(@RequestBody Pessoa pessoa){
         pessoa = pessoaService.atualizarPessoa(pessoa);
         return ResponseEntity.ok().body(pessoa);
     }
 
 
-    @DeleteMapping(value = "/deletarPessoaId/{id}")
+    @DeleteMapping(value = "/pessoa/deletarPessoaId/{id}")
     public ResponseEntity<Void>  deletarPessoa(@PathVariable Integer id){
         pessoaService.deletarPessoa(id);
         return ResponseEntity.noContent().build();
