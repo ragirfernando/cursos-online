@@ -73,6 +73,7 @@ public class TestConfig implements CommandLineRunner {
         usuario3.getPerfis().add(perfil2);
         usuario4.getPerfis().add(perfil1);
         usuario4.getPerfis().add(perfil2);
+        usuario4.getPerfis().add(perfil3);
 
         usuario5.getPerfis().add(perfil3);
         usuario6.getPerfis().add(perfil3);

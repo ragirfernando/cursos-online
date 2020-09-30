@@ -25,6 +25,10 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findAll();
     }
 
+    public Usuario listarUsuario(String username, String password) {
+        return usuarioRepository.findByUsernameAndPassword(username, password);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = Optional.ofNullable(usuarioRepository.findByUsername(username))
