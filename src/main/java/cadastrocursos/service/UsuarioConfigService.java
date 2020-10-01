@@ -24,6 +24,11 @@ public class UsuarioConfigService implements UserDetailsService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    public Usuario listarUsuaioUsername(String username) {
+        Usuario usuario = usuarioRepository.findByUsername(username);
+        return usuario;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = Optional.ofNullable(usuarioRepository.findByUsername(username))
@@ -34,7 +39,7 @@ public class UsuarioConfigService implements UserDetailsService {
         return new User(usuario.getUsername(), usuario.getPassword(), roles);
     }
 
-    private List<String> addListaPerfis(Set<Perfil> perfis) {
+    private List<String> addListaPerfis(List<Perfil> perfis) {
         List<String> listaPerfis = new ArrayList<>();
         perfis.forEach(perfil -> {
             listaPerfis.add(perfil.getNome());

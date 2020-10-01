@@ -1,7 +1,10 @@
 package cadastrocursos.config;
 
+import cadastrocursos.domain.Resposta;
 import cadastrocursos.domain.Usuario;
+import cadastrocursos.service.UsuarioConfigService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,30 +23,33 @@ import java.util.Date;
 import static cadastrocursos.config.SecurityConstants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    Gson gson = new Gson();
 
     private AuthenticationManager authenticationManager;
+    private Usuario usuario;
+    private UsuarioConfigService usuarioConfigService;
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, UsuarioConfigService usuarioConfigService) {
         this.authenticationManager = authenticationManager;
+        this.usuarioConfigService = usuarioConfigService;
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            Usuario usuario = new ObjectMapper().readValue(request.getInputStream(), Usuario.class);
-            return this.authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword()));
+            usuario = new ObjectMapper().readValue(request.getInputStream(), Usuario.class);
+            return this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    public Usuario buscarUsuarioLogado(String username) {
+        return usuarioConfigService.listarUsuaioUsername(username);
+    }
+
     @Override
-    protected void successfulAuthentication(HttpServletRequest request,
-                                            HttpServletResponse response,
-                                            FilterChain chain,
-                                            Authentication authResult)
-            throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String username = ((org.springframework.security.core.userdetails.User) authResult.getPrincipal()).getUsername();
         String token = Jwts
                 .builder()
@@ -52,14 +58,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
         String bearerToken = TOKEN_PREFIX + token;
-        response.getWriter().write(bearerToken);
+        Resposta resposta = new Resposta(bearerToken, buscarUsuarioLogado(usuario.getUsername()));
+        response.getWriter().write(gson.toJson(resposta));
         response.addHeader(HEADER_STRING, bearerToken);
     }
 }
-// http.cors().and().csrf().disable().authorizeRequests()
-//         .antMatchers(HttpMethod.GET, SIGN_UP_URL).permitAll()
-//         .antMatchers("/*/protected/**").hasRole("USER")
-//         .antMatchers("/*/admin/**").hasRole("ADMIN")
-//         .and()
-//         .addFilter(new JwtTAuthenticationFilter(authenticationManager()))
-//         .addFilter(new JwtAuthorizationFilter(authenticationManager(), usuarioService));

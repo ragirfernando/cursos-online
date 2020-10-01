@@ -5,9 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @ToString
 @NoArgsConstructor
@@ -69,7 +67,7 @@ public class Usuario implements Serializable {
     @JoinTable(name = "usuario_perfil",
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "perfil_id"))
-    private Set<Perfil> perfis = new HashSet<>();
+    private List<Perfil> perfis = new ArrayList<>();
 
 
     public Usuario(Integer id, String username, String password, String nome, String cpf, String celular, String rg, String email, LocalDate dataNascimento, String orgaoEmissor) {

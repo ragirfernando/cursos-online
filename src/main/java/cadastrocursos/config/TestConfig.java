@@ -114,7 +114,7 @@ public class TestConfig implements CommandLineRunner {
         usuario4.setEndereco(endereco);
         usuario5.setEndereco(endereco);
         usuario6.setEndereco(endereco);
-        //usuarioRepository.saveAll(Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6));
+        usuarioRepository.saveAll(Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6));
 
 
 

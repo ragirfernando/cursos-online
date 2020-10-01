@@ -27,6 +27,8 @@ public class UsuarioService  {
         return pessoa.orElseThrow(() -> new ResourceNotFoundException("Não esta cadastrado no banco de dados"));
     }
 
+
+
     public Usuario listarUsuariosCPF(String cpf) {
         Optional<Usuario> pessoa = Optional.ofNullable(usuarioRepository.findByCpf(cpf));
         return pessoa.orElseThrow(() -> new ResourceNotFoundException("Não esta cadastrado no banco de dados"));

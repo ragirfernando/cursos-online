@@ -1,7 +1,6 @@
 package cadastrocursos.config;
 
 import cadastrocursos.service.UsuarioConfigService;
-import cadastrocursos.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -21,12 +20,11 @@ import static cadastrocursos.config.SecurityConstants.SIGN_UP_URL;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UsuarioConfigService usuarioService;
+    private UsuarioConfigService usuarioConfigService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .cors()
+        http.cors()
                 .configurationSource(request -> new CorsConfiguration()
                         .applyPermitDefaultValues())
                 .and()
@@ -34,13 +32,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, SIGN_UP_URL).permitAll()
-                .antMatchers("/*/aluno/**").hasRole("ALUNO")
-                .antMatchers("/*/instrutor/**").hasRole("INSTRUTOR")
-                .antMatchers("/*/pessoa/**").hasAnyRole("ADMIN", "INSTRUTOR", "ALUNO")
-                .antMatchers("/*/admin/**").hasRole("ADMIN")
+                .antMatchers("/alunos/aluno/**").hasRole("ALUNO")
+                .antMatchers("/instrutores/instrutor/**").hasRole("INSTRUTOR")
+                .antMatchers("/usuarios/usuario/**").hasAnyRole("ADMIN", "INSTRUTOR", "ALUNO")
+                .antMatchers("/admins/admin/**").hasRole("ADMIN")
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), usuarioService));
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(), usuarioConfigService))
+                .addFilter(new JWTAuthorizationFilter(authenticationManager(), usuarioConfigService));
+
+       /* httpSecurity.cors().disable().csrf().disable()
+                .authorizeRequests().antMatchers("/v1/login").permitAll().
+        anyRequest().authenticated()
+                .and().
+        exceptionHandling().
+                and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);*/
 
 //        http.authorizeRequests()
 //                .antMatchers("/*/aluno/**").hasRole("ALUNO")
@@ -54,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(usuarioService).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(usuarioConfigService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Bean
