@@ -1,10 +1,10 @@
 package cadastrocursos.controller;
 
 import cadastrocursos.domain.Curso;
-import cadastrocursos.domain.Pessoa;
+import cadastrocursos.domain.Usuario;
 import cadastrocursos.service.CursoService;
 import cadastrocursos.service.InstrutorService;
-import cadastrocursos.service.PessoaService;
+import cadastrocursos.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class InstrutorController {
     private CursoService cursoService;
 
     @Autowired
-    private PessoaService pessoaService;
+    private UsuarioService usuarioService;
 
     @Autowired
     private InstrutorService instrutorService;
@@ -39,8 +39,8 @@ public class InstrutorController {
     @PostMapping(value = "/instrutor/inserirInstrutorCurso/{idCurso}/{idPessoa")
     public ResponseEntity<String> inserirAluno(@PathVariable Integer idCurso, @PathVariable Integer idPessoa) {
         Curso curso = cursoService.listarCurso(idCurso);
-        Pessoa pessoa = pessoaService.listarPessoasId(idPessoa);
-        curso.getInstrutor().add(pessoa);
+        Usuario usuario = usuarioService.listarUsuaioId(idPessoa);
+        curso.getInstrutor().add(usuario);
         Curso cursoInserido = cursoService.inserirCurso(curso);
         return ResponseEntity.ok().body(cursoInserido.getDescricao());
     }
@@ -48,8 +48,8 @@ public class InstrutorController {
     @DeleteMapping(value = "/instrutor/cancelarInscricao/{idCurso}/{idInstrutor}")
     public ResponseEntity<String> cancelarInscricao(@PathVariable Integer idCurso, @PathVariable Integer idInstrutor) {
         Curso curso = cursoService.listarCurso(idCurso);
-        Pessoa pessoa = pessoaService.listarPessoasId(idInstrutor);
-        curso.getInstrutor().remove(pessoa);
+        Usuario usuario = usuarioService.listarUsuaioId(idInstrutor);
+        curso.getInstrutor().remove(usuario);
         Curso cursoInserido = cursoService.inserirCurso(curso);
         return ResponseEntity.ok().body(cursoInserido.getDescricao());
     }

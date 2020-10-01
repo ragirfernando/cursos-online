@@ -4,13 +4,16 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@EqualsAndHashCode(exclude={"username", "password", "pessoa"})
+@ToString
 @NoArgsConstructor
 @Entity
 public class Usuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -29,8 +32,37 @@ public class Usuario implements Serializable {
 
     @Getter
     @Setter
-    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    private Pessoa pessoa;
+    private String nome;
+
+    @Getter
+    @Setter
+    private String cpf;
+
+    @Getter
+    @Setter
+    private String celular;
+
+    @Getter
+    @Setter
+    private String rg;
+
+    @Getter
+    @Setter
+    private String email;
+
+    @Getter
+    @Setter
+    private LocalDate dataNascimento;
+
+    @Getter
+    @Setter
+    private String orgaoEmissor;
+
+    @Getter
+    @Setter
+    @OneToOne(cascade = {CascadeType.ALL} ,  orphanRemoval = true)
+    @JoinColumn(name = "endereco_id", referencedColumnName = "id")
+    private Endereco endereco;
 
     @Getter
     @ManyToMany(fetch = FetchType.EAGER)
@@ -39,9 +71,17 @@ public class Usuario implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "perfil_id"))
     private Set<Perfil> perfis = new HashSet<>();
 
-    public Usuario(Integer id, String username, String password) {
+
+    public Usuario(Integer id, String username, String password, String nome, String cpf, String celular, String rg, String email, LocalDate dataNascimento, String orgaoEmissor) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.celular = celular;
+        this.rg = rg;
+        this.email = email;
+        this.dataNascimento = dataNascimento;
+        this.orgaoEmissor = orgaoEmissor;
     }
 }

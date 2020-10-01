@@ -66,14 +66,14 @@ public class Curso implements Serializable {
     @JoinTable(name = "curso_aluno",
             joinColumns = @JoinColumn(name = "curso_id"),
             inverseJoinColumns = @JoinColumn(name = "aluno_id"))
-    private Set<Pessoa> alunos = new HashSet<>();
+    private Set<Usuario> alunos = new HashSet<>();
 
     @Getter
     @ManyToMany
     @JoinTable(name = "curso_instrutor",
             joinColumns = @JoinColumn(name = "curso_id"),
             inverseJoinColumns = @JoinColumn(name = "instrutor_id"))
-    private Set<Pessoa> instrutor = new HashSet<>();
+    private Set<Usuario> instrutor = new HashSet<>();
 
     public Curso(Integer id, String descricao, LocalDate dataInicio, LocalDate dataFim, Double valor, Integer quantidadeHoras, StatusCurso statusCurso) {
         this.id = id;

@@ -1,9 +1,7 @@
 package cadastrocursos.controller;
 
 import cadastrocursos.domain.Curso;
-import cadastrocursos.domain.Pessoa;
 import cadastrocursos.service.CursoService;
-import cadastrocursos.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

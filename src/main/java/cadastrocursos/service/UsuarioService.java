@@ -1,22 +1,19 @@
 package cadastrocursos.service;
 
-import cadastrocursos.domain.Perfil;
 import cadastrocursos.domain.Usuario;
+import cadastrocursos.exceptions.DatabaseException;
 import cadastrocursos.exceptions.ResourceNotFoundException;
 import cadastrocursos.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UsuarioService implements UserDetailsService {
+public class UsuarioService  {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -25,34 +22,31 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findAll();
     }
 
-    public Usuario listarUsuario(String username, String password) {
-        return usuarioRepository.findByUsernameAndPassword(username, password);
+    public Usuario listarUsuaioId(Integer id) {
+        Optional<Usuario> pessoa = usuarioRepository.findById(id);
+        return pessoa.orElseThrow(() -> new ResourceNotFoundException("Não esta cadastrado no banco de dados"));
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = Optional.ofNullable(usuarioRepository.findByUsername(username))
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-
-        List<String> perfis = addListaPerfis(usuario.getPerfis());
-        List<GrantedAuthority> roles = createAuthorityList(perfis);
-        return new User(usuario.getUsername(), usuario.getPassword(), roles);
+    public Usuario listarUsuariosCPF(String cpf) {
+        Optional<Usuario> pessoa = Optional.ofNullable(usuarioRepository.findByCpf(cpf));
+        return pessoa.orElseThrow(() -> new ResourceNotFoundException("Não esta cadastrado no banco de dados"));
     }
 
-    private List<String> addListaPerfis(Set<Perfil> perfis) {
-        List<String> listaPerfis = new ArrayList<>();
-        perfis.forEach(perfil -> {
-            listaPerfis.add(perfil.getNome());
-        });
-        return listaPerfis;
+    public Usuario inserirUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
     }
 
-    public static List<GrantedAuthority> createAuthorityList(List<String> roles) {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(roles.size());
-        roles.forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role));
-        });
-        return authorities;
+    public Usuario atualizarUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
     }
 
+    public void deletarPessoa(Integer id) {
+        try {
+            usuarioRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
+            throw new ResourceNotFoundException("Não esta cadastrado no banco de dados");
+        } catch (DataIntegrityViolationException dataIntegrityViolationException) {
+            throw new DatabaseException("Não pode ser deletada, esta vinculada a um curso");
+        }
+    }
 }

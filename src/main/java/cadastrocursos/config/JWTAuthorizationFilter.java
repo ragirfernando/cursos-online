@@ -1,5 +1,6 @@
 package cadastrocursos.config;
 
+import cadastrocursos.service.UsuarioConfigService;
 import cadastrocursos.service.UsuarioService;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,11 +19,11 @@ import static cadastrocursos.config.SecurityConstants.*;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private UsuarioService usuarioService;
+    private UsuarioConfigService usuarioConfigService;
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, UsuarioService usuarioService) {
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, UsuarioConfigService usuarioConfigService) {
         super(authenticationManager);
-        this.usuarioService = usuarioService;
+        this.usuarioConfigService = usuarioConfigService;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                 .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                 .getBody()
                 .getSubject();
-        UserDetails userDetails = usuarioService.loadUserByUsername(username);
+        UserDetails userDetails = usuarioConfigService.loadUserByUsername(username);
         return username != null? new UsernamePasswordAuthenticationToken(username, null , userDetails.getAuthorities()) : null;
     }
 }

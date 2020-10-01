@@ -1,10 +1,10 @@
 package cadastrocursos.controller;
 
 import cadastrocursos.domain.Curso;
-import cadastrocursos.domain.Pessoa;
+import cadastrocursos.domain.Usuario;
 import cadastrocursos.service.AlunoService;
 import cadastrocursos.service.CursoService;
-import cadastrocursos.service.PessoaService;
+import cadastrocursos.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class AlunoController {
     private CursoService cursoService;
 
     @Autowired
-    private PessoaService pessoaService;
+    private UsuarioService usuarioService;
 
     @Autowired
     private AlunoService alunoService;
@@ -39,8 +39,8 @@ public class AlunoController {
     @PostMapping(value = "/aluno/inserirAlunoCurso/{idCurso}/{idAluno}")
     public ResponseEntity<String> inserirAluno(@PathVariable Integer idCurso, @PathVariable Integer idAluno) {
         Curso curso = cursoService.listarCurso(idCurso);
-        Pessoa pessoa = pessoaService.listarPessoasId(idAluno);
-        curso.getAlunos().add(pessoa);
+        Usuario usuario = usuarioService.listarUsuaioId(idAluno);
+        curso.getAlunos().add(usuario);
         Curso cursoInserido = cursoService.inserirCurso(curso);
         return ResponseEntity.ok().body(cursoInserido.getDescricao());
     }
@@ -48,8 +48,8 @@ public class AlunoController {
     @DeleteMapping(value = "/aluno/cancelarInscricao/{idCurso}/{idPessoa}")
     public ResponseEntity<String> cancelarInscricao(@PathVariable Integer idCurso, @PathVariable Integer idPessoa) {
         Curso curso = cursoService.listarCurso(idCurso);
-        Pessoa pessoa = pessoaService.listarPessoasId(idPessoa);
-        curso.getAlunos().remove(pessoa);
+        Usuario usuario = usuarioService.listarUsuaioId(idPessoa);
+        curso.getAlunos().remove(usuario);
         Curso cursoInserido = cursoService.inserirCurso(curso);
         return ResponseEntity.ok().body(cursoInserido.getDescricao());
     }

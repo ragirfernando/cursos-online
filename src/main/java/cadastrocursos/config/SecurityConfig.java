@@ -1,5 +1,6 @@
 package cadastrocursos.config;
 
+import cadastrocursos.service.UsuarioConfigService;
 import cadastrocursos.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +21,7 @@ import static cadastrocursos.config.SecurityConstants.SIGN_UP_URL;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UsuarioConfigService usuarioService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
