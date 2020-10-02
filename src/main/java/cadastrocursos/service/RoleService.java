@@ -22,9 +22,6 @@ public class RoleService {
 
     public List<Role> listarRoles() {
         List<Role> roles = rolelRepository.findAll();
-        roles.forEach(perfil -> {
-            perfil.getMenus().clear();
-        });
         return roles;
     }
 
