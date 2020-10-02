@@ -28,9 +28,6 @@ public class RoleService {
     public Role listarRole(Integer id) {
         try {
             Optional<Role> role = rolelRepository.findById(id);
-            if (role != null) {
-                role.get().getMenus().clear();
-            }
             return role.get();
         }catch (NoSuchElementException e){
             throw new ResourceNotFoundException("Role não esta salvo na base de dados");

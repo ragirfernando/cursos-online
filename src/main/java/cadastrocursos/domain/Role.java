@@ -28,8 +28,8 @@ public class Role implements Serializable {
 
     @Getter
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "menu_perfil",
-            joinColumns = @JoinColumn(name = "perfil_id"),
+    @JoinTable(name = "menu_role",
+            joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "menu_id"))
     private List<Menu> menus = new ArrayList<>();
 

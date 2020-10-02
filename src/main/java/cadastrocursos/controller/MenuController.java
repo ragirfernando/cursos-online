@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/menus")
-public class MenusController {
+public class MenuController {
 
     @Autowired
     private RoleService roleService;
@@ -36,7 +36,7 @@ public class MenusController {
         return ResponseEntity.ok().body(menu);
     }
 
-    @PostMapping(value = "/menu/inserirMenu/{idRole")
+    @PostMapping(value = "/menu/inserirMenu/{idRole}")
     public ResponseEntity<Menu> inserirMenu(@RequestBody Menu menu, @PathVariable Integer idRole){
         Menu menuInserido = menuService.inseriMenu(menu);
         URI uri = ServletUriComponentsBuilder
@@ -50,8 +50,20 @@ public class MenusController {
         return ResponseEntity.created(uri).body(menuInserido);
     }
 
-    @PutMapping(value = "/menu/atualizarMenu")
-    public ResponseEntity<Menu> atualizarMenu(@RequestBody Menu menu){
+    @PutMapping(value = "/menu/atualizarMenu/{idRoleAntigo}/{idRoleNovo}")
+    public ResponseEntity<Menu> atualizarMenu(@RequestBody Menu menu, @PathVariable Integer idRoleAntigo, @PathVariable Integer idRoleNovo ){
+        if (idRoleAntigo != idRoleNovo){
+            Role roleIdRoleAntigo = roleService.listarRole(idRoleAntigo);
+            Role roleIdRoleNovo = roleService.listarRole(idRoleNovo);
+            List<Role> roles = roleService.listarRoles();
+
+
+
+
+
+
+            //roleService.inseriRole(roleIdRoleAntigo);
+        }
         Menu menuAtualizado = menuService.inseriMenu(menu);
         return ResponseEntity.ok().body(menuAtualizado);
     }
