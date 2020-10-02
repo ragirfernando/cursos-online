@@ -6,20 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(value = "/usuarios")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
-
-    @GetMapping(value = "usuario/usuarios")
-    public ResponseEntity<List<Usuario>> listarUsuarios(){
-        List<Usuario> usuarios = usuarioService.listarUsuarios();
-        return ResponseEntity.ok().body(usuarios);
-    }
 
     @GetMapping(value = "/usuario/listarUsuarioId/{id}")
     public ResponseEntity<Usuario> listarUsuarioId(@PathVariable Integer id){

@@ -67,7 +67,7 @@ public class Usuario implements Serializable {
     @JoinTable(name = "usuario_perfil",
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "perfil_id"))
-    private List<Perfil> perfis = new ArrayList<>();
+    private List<Role> perfis = new ArrayList<>();
 
 
     public Usuario(Integer id, String username, String password, String nome, String cpf, String celular, String rg, String email, LocalDate dataNascimento, String orgaoEmissor) {

@@ -4,7 +4,7 @@ import cadastrocursos.domain.*;
 import cadastrocursos.enums.StatusCurso;
 import cadastrocursos.repository.CursoRepository;
 import cadastrocursos.repository.MenuRepository;
-import cadastrocursos.repository.PerfilRepository;
+import cadastrocursos.repository.RolelRepository;
 import cadastrocursos.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -30,7 +30,7 @@ public class TestConfig implements CommandLineRunner {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private PerfilRepository perfilRepository;
+    private RolelRepository rolelRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -109,13 +109,27 @@ public class TestConfig implements CommandLineRunner {
                 "SSP"
         );
 
+        Usuario usuario7 = new Usuario(
+                null,
+                "ragir",
+                "$2a$10$Y4RCr5Dh0TyhS9y2CPqeMOprDwY8gFEgSBHAKNxlJohRHTpB7O5o2",
+                "Ragir Fernando",
+                "223265874123",
+                "63368741257",
+                "85747896",
+                "ragirfernando@gmail",
+                LocalDate.now(),
+                "SSP"
+        );
+
         usuario1.setEndereco(endereco);
         usuario2.setEndereco(endereco);
         usuario3.setEndereco(endereco);
         usuario4.setEndereco(endereco);
         usuario5.setEndereco(endereco);
         usuario6.setEndereco(endereco);
-        usuarioRepository.saveAll(Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6));
+        usuario7.setEndereco(endereco);
+        usuarioRepository.saveAll(Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7));
 
         Menu menu1 = new Menu(null, "/cursosAlunos");
         Menu menu2 = new Menu(null, "/meusCursosAlunos");
@@ -126,31 +140,38 @@ public class TestConfig implements CommandLineRunner {
         Menu menu5 = new Menu(null, "/cursosAdmins");
         Menu menu6 = new Menu(null, "/meusCursosAdmins");
 
-        menuRepository.saveAll(Arrays.asList(menu1, menu2, menu3, menu4, menu5, menu6));
+        Menu menu7 = new Menu(null, "/desenvolvedor");
 
-        Perfil perfil1 = new Perfil(null, "ROLE_ADMIN");
-        Perfil perfil2 = new Perfil(null, "ROLE_ALUNO");
-        Perfil perfil3 = new Perfil(null, "ROLE_INSTRUTOR");
+        menuRepository.saveAll(Arrays.asList(menu1, menu2, menu3, menu4, menu5, menu6, menu7));
 
-        perfil1.getMenus().add(menu5);
-        perfil1.getMenus().add(menu6);
+        Role role1 = new Role(null, "ROLE_ADMIN");
+        Role role2 = new Role(null, "ROLE_ALUNO");
+        Role role3 = new Role(null, "ROLE_INSTRUTOR");
+        Role role4 = new Role(null, "ROLE_DESENVOLVEDOR");
 
-        perfil2.getMenus().add(menu1);
-        perfil2.getMenus().add(menu2);
+        role1.getMenus().add(menu5);
+        role1.getMenus().add(menu6);
+        role2.getMenus().add(menu1);
+        role2.getMenus().add(menu2);
+        role3.getMenus().add(menu3);
+        role3.getMenus().add(menu4);
+        role4.getMenus().add(menu7);
+        rolelRepository.saveAll(Arrays.asList(role1, role2, role3, role4));
 
-        perfil3.getMenus().add(menu3);
-        perfil3.getMenus().add(menu4);
-        perfilRepository.saveAll(Arrays.asList(perfil1, perfil2, perfil3));
+        usuario1.getPerfis().add(role2);
+        usuario2.getPerfis().add(role2);
+        usuario3.getPerfis().add(role2);
+        usuario4.getPerfis().add(role1);
+        usuario4.getPerfis().add(role2);
+        usuario4.getPerfis().add(role3);
+        usuario5.getPerfis().add(role3);
+        usuario6.getPerfis().add(role3);
 
-        usuario1.getPerfis().add(perfil2);
-        usuario2.getPerfis().add(perfil2);
-        usuario3.getPerfis().add(perfil2);
-        usuario4.getPerfis().add(perfil1);
-        usuario4.getPerfis().add(perfil2);
-        usuario4.getPerfis().add(perfil3);
-        usuario5.getPerfis().add(perfil3);
-        usuario6.getPerfis().add(perfil3);
-        usuarioRepository.saveAll(Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6));
+        usuario7.getPerfis().add(role1);
+        usuario7.getPerfis().add(role2);
+        usuario7.getPerfis().add(role3);
+        usuario7.getPerfis().add(role4);
+        usuarioRepository.saveAll(Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6, usuario7));
 
 
         HorarioAula horarioAula1 = new HorarioAula(null, LocalDate.now(), new Date(), new Date(), new Date(), new Date());

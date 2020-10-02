@@ -36,27 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/instrutores/instrutor/**").hasRole("INSTRUTOR")
                 .antMatchers("/usuarios/usuario/**").hasAnyRole("ADMIN", "INSTRUTOR", "ALUNO")
                 .antMatchers("/admins/admin/**").hasRole("ADMIN")
+                .antMatchers("/desenvolvedores/desenvolvedor/**").hasRole("DESENVOLVEDOR")
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), usuarioConfigService))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager(), usuarioConfigService));
-
-       /* httpSecurity.cors().disable().csrf().disable()
-                .authorizeRequests().antMatchers("/v1/login").permitAll().
-        anyRequest().authenticated()
-                .and().
-        exceptionHandling().
-                and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);*/
-
-//        http.authorizeRequests()
-//                .antMatchers("/*/aluno/**").hasRole("ALUNO")
-//                .antMatchers("/*/instrutor/**").hasRole("INSTRUTOR")
-//                .antMatchers("/*/pessoa/**").hasAnyRole("ADMIN", "INSTRUTOR", "ALUNO")
-//                .antMatchers("/*/admin/**").hasRole("ADMIN")
-//                .and()
-//                .httpBasic()
-//                .and().csrf().disable();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package cadastrocursos.service;
 
-import cadastrocursos.domain.Perfil;
+import cadastrocursos.domain.Role;
 import cadastrocursos.domain.Usuario;
 import cadastrocursos.exceptions.ResourceNotFoundException;
 import cadastrocursos.repository.UsuarioRepository;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UsuarioConfigService implements UserDetailsService {
@@ -38,7 +37,7 @@ public class UsuarioConfigService implements UserDetailsService {
         return new User(usuario.getUsername(), usuario.getPassword(), roles);
     }
 
-    private List<String> addListaPerfis(List<Perfil> perfis) {
+    private List<String> addListaPerfis(List<Role> perfis) {
         List<String> listaPerfis = new ArrayList<>();
         perfis.forEach(perfil -> {
             listaPerfis.add(perfil.getNome());

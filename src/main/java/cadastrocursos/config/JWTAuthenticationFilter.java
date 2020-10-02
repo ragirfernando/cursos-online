@@ -1,6 +1,6 @@
 package cadastrocursos.config;
 
-import cadastrocursos.domain.Perfil;
+import cadastrocursos.domain.Role;
 import cadastrocursos.domain.Resposta;
 import cadastrocursos.domain.Usuario;
 import cadastrocursos.service.UsuarioConfigService;
@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -69,7 +68,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.addHeader(HEADER_STRING, bearerToken);
     }
 
-    private List<String> addUrls(List<Perfil> perfis) {
+    private List<String> addUrls(List<Role> perfis) {
         List<String> listaUrls = new ArrayList<>();
         perfis.forEach(perfil -> {
             perfil.getMenus().forEach(menu -> {
@@ -79,13 +78,3 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return listaUrls;
     }
 }
-
-    /*private Integer IdUsuario;
-
-    private Integer Status;
-
-    private String token;
-
-    private String nome;
-
-    private List<String> urls = new ArrayList<>();*/

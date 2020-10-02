@@ -1,7 +1,6 @@
 package cadastrocursos.config;
 
 import cadastrocursos.service.UsuarioConfigService;
-import cadastrocursos.service.UsuarioService;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,15 +35,14 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
             return;
         }
-
         UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(request);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
     }
 
-    private UsernamePasswordAuthenticationToken getAuthenticationToken(HttpServletRequest request){
+    private UsernamePasswordAuthenticationToken getAuthenticationToken(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
-        if (token == null){
+        if (token == null) {
             return null;
         }
         String username = Jwts.parser().setSigningKey(SECRET)
@@ -52,6 +50,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                 .getBody()
                 .getSubject();
         UserDetails userDetails = usuarioConfigService.loadUserByUsername(username);
-        return username != null? new UsernamePasswordAuthenticationToken(username, null , userDetails.getAuthorities()) : null;
+        return username != null ? new UsernamePasswordAuthenticationToken(username, null, userDetails.getAuthorities()) : null;
     }
 }

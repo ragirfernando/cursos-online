@@ -13,7 +13,7 @@ import java.util.List;
 @EqualsAndHashCode(exclude={"nome", "menus"})
 @NoArgsConstructor
 @Entity
-public class Perfil implements Serializable {
+public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -33,7 +33,7 @@ public class Perfil implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "menu_id"))
     private List<Menu> menus = new ArrayList<>();
 
-    public Perfil(Integer id, String nome) {
+    public Role(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
     }
