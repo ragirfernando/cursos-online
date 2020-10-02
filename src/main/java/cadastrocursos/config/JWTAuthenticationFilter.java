@@ -1,5 +1,6 @@
 package cadastrocursos.config;
 
+import cadastrocursos.domain.Perfil;
 import cadastrocursos.domain.Resposta;
 import cadastrocursos.domain.Usuario;
 import cadastrocursos.service.UsuarioConfigService;
@@ -8,6 +9,7 @@ import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -18,7 +20,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static cadastrocursos.config.SecurityConstants.*;
 
@@ -58,8 +62,30 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
         String bearerToken = TOKEN_PREFIX + token;
-        Resposta resposta = new Resposta(bearerToken, buscarUsuarioLogado(usuario.getUsername()));
+        Usuario usuarioLogado = buscarUsuarioLogado(usuario.getUsername());
+        List<String> urls = addUrls(usuarioLogado.getPerfis());
+        Resposta resposta = new Resposta(usuarioLogado.getId(), response.getStatus(), bearerToken, usuarioLogado.getNome(), urls);
         response.getWriter().write(gson.toJson(resposta));
         response.addHeader(HEADER_STRING, bearerToken);
     }
+
+    private List<String> addUrls(List<Perfil> perfis) {
+        List<String> listaUrls = new ArrayList<>();
+        perfis.forEach(perfil -> {
+            perfil.getMenus().forEach(menu -> {
+                listaUrls.add(menu.getUrl());
+            });
+        });
+        return listaUrls;
+    }
 }
+
+    /*private Integer IdUsuario;
+
+    private Integer Status;
+
+    private String token;
+
+    private String nome;
+
+    private List<String> urls = new ArrayList<>();*/

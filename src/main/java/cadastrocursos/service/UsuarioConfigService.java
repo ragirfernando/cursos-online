@@ -33,7 +33,6 @@ public class UsuarioConfigService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = Optional.ofNullable(usuarioRepository.findByUsername(username))
                 .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-
         List<String> perfis = addListaPerfis(usuario.getPerfis());
         List<GrantedAuthority> roles = createAuthorityList(perfis);
         return new User(usuario.getUsername(), usuario.getPassword(), roles);
@@ -54,6 +53,4 @@ public class UsuarioConfigService implements UserDetailsService {
         });
         return authorities;
     }
-
-
 }

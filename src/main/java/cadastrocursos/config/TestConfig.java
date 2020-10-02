@@ -3,6 +3,7 @@ package cadastrocursos.config;
 import cadastrocursos.domain.*;
 import cadastrocursos.enums.StatusCurso;
 import cadastrocursos.repository.CursoRepository;
+import cadastrocursos.repository.MenuRepository;
 import cadastrocursos.repository.PerfilRepository;
 import cadastrocursos.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private CursoRepository cursoRepository;
 
-   /* @Autowired
-    private PessoaRepository pessoaRepository;*/
+    @Autowired
+    private MenuRepository menuRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -116,20 +117,30 @@ public class TestConfig implements CommandLineRunner {
         usuario6.setEndereco(endereco);
         usuarioRepository.saveAll(Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6));
 
+        Menu menu1 = new Menu(null, "/cursosAlunos");
+        Menu menu2 = new Menu(null, "/meusCursosAlunos");
 
+        Menu menu3 = new Menu(null, "/cursosInstrutores");
+        Menu menu4 = new Menu(null, "/meusCursosInstrutores");
+
+        Menu menu5 = new Menu(null, "/cursosAdmins");
+        Menu menu6 = new Menu(null, "/meusCursosAdmins");
+
+        menuRepository.saveAll(Arrays.asList(menu1, menu2, menu3, menu4, menu5, menu6));
 
         Perfil perfil1 = new Perfil(null, "ROLE_ADMIN");
         Perfil perfil2 = new Perfil(null, "ROLE_ALUNO");
         Perfil perfil3 = new Perfil(null, "ROLE_INSTRUTOR");
+
+        perfil1.getMenus().add(menu5);
+        perfil1.getMenus().add(menu6);
+
+        perfil2.getMenus().add(menu1);
+        perfil2.getMenus().add(menu2);
+
+        perfil3.getMenus().add(menu3);
+        perfil3.getMenus().add(menu4);
         perfilRepository.saveAll(Arrays.asList(perfil1, perfil2, perfil3));
-
-       /* Usuario usuario1 = new Usuario(null, "roberto", "$2a$10$RqzpUg4K5/3eaxBJ0tjON.JvkTAvj4fa/1W9NvLKtZ798rICa9byy");
-        Usuario usuario2 = new Usuario(null, "ana", "$2a$10$RqzpUg4K5/3eaxBJ0tjON.JvkTAvj4fa/1W9NvLKtZ798rICa9byy");
-        Usuario usuario3 = new Usuario(null, "maria", "$2a$10$RqzpUg4K5/3eaxBJ0tjON.JvkTAvj4fa/1W9NvLKtZ798rICa9byy");
-        Usuario usuario4 = new Usuario(null, "carlos", "$2a$10$209u3RTwd00zfdRuf/Db6.JW2fnDrKL810EJHFujyqe6SN2SNmROK");
-
-        Usuario usuario5 = new Usuario(null, "gustavo", "$2a$10$ywWGADU85VR/jWgWAomIfuV5jruzeROkUs2ZxPQ5Mv0o0n2CiKscq");
-        Usuario usuario6 = new Usuario(null, "leticia", "$2a$10$Y4RCr5Dh0TyhS9y2CPqeMOprDwY8gFEgSBHAKNxlJohRHTpB7O5o2");*/
 
         usuario1.getPerfis().add(perfil2);
         usuario2.getPerfis().add(perfil2);
@@ -140,14 +151,6 @@ public class TestConfig implements CommandLineRunner {
         usuario5.getPerfis().add(perfil3);
         usuario6.getPerfis().add(perfil3);
         usuarioRepository.saveAll(Arrays.asList(usuario1, usuario2, usuario3, usuario4, usuario5, usuario6));
-
-        /*usuario1.setPessoa(pessoa1);
-        usuario2.setPessoa(pessoa2);
-        usuario3.setPessoa(pessoa3);
-        usuario4.setPessoa(pessoa4);
-
-        usuario5.setPessoa(pessoa4);
-        usuario6.setPessoa(pessoa4);*/
 
 
         HorarioAula horarioAula1 = new HorarioAula(null, LocalDate.now(), new Date(), new Date(), new Date(), new Date());

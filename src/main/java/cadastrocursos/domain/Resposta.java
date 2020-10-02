@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.OneToOne;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -14,9 +16,16 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Resposta implements Serializable {
 
+    private Integer IdUsuario;
+
+    private Integer Status;
+
     private String token;
 
-    @OneToOne
-    private Usuario usuario;
+    private String nome;
+
+    private List<String> urls = new ArrayList<>();
+
+
 
 }
