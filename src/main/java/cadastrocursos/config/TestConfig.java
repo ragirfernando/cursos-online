@@ -144,7 +144,7 @@ public class TestConfig implements CommandLineRunner {
 
         menuRepository.saveAll(Arrays.asList(menu1, menu2, menu3, menu4, menu5, menu6, menu7));
 
-        Role role1 = new Role(null, "ROLE_ADMIN");
+        Role role1 = new Role(null, "ROLE_COODERNADOR");
         Role role2 = new Role(null, "ROLE_ALUNO");
         Role role3 = new Role(null, "ROLE_INSTRUTOR");
         Role role4 = new Role(null, "ROLE_DESENVOLVEDOR");

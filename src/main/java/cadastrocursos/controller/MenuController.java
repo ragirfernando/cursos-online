@@ -2,10 +2,8 @@ package cadastrocursos.controller;
 
 import cadastrocursos.domain.Menu;
 import cadastrocursos.domain.Role;
-import cadastrocursos.domain.Usuario;
 import cadastrocursos.service.MenuService;
 import cadastrocursos.service.RoleService;
-import cadastrocursos.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,19 +23,19 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping(value = "/menu/menus")
-    public ResponseEntity<List<Menu>> listarMenus(){
+    public ResponseEntity<List<Menu>> listarMenus() {
         List<Menu> menus = menuService.listarMenus();
         return ResponseEntity.ok().body(menus);
     }
 
     @GetMapping(value = "/menu/menuId/{id}")
-    public ResponseEntity<Menu> listarMenuId(@PathVariable Integer id){
+    public ResponseEntity<Menu> listarMenuId(@PathVariable Integer id) {
         Menu menu = menuService.listarMenu(id);
         return ResponseEntity.ok().body(menu);
     }
 
     @PostMapping(value = "/menu/inserirMenu/{idRole}")
-    public ResponseEntity<Menu> inserirMenu(@RequestBody Menu menu, @PathVariable Integer idRole){
+    public ResponseEntity<Menu> inserirMenu(@RequestBody Menu menu, @PathVariable Integer idRole) {
         Menu menuInserido = menuService.inseriMenu(menu);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -51,25 +49,20 @@ public class MenuController {
     }
 
     @PutMapping(value = "/menu/atualizarMenu/{idRoleAntigo}/{idRoleNovo}")
-    public ResponseEntity<Menu> atualizarMenu(@RequestBody Menu menu, @PathVariable Integer idRoleAntigo, @PathVariable Integer idRoleNovo ){
-        if (idRoleAntigo != idRoleNovo){
+    public ResponseEntity<Menu> atualizarMenu(@RequestBody Menu menu, @PathVariable Integer idRoleAntigo, @PathVariable Integer idRoleNovo) {
+        if (idRoleAntigo != idRoleNovo) {
             Role roleIdRoleAntigo = roleService.listarRole(idRoleAntigo);
             Role roleIdRoleNovo = roleService.listarRole(idRoleNovo);
-            List<Role> roles = roleService.listarRoles();
-
-
-
-
-
-
-            //roleService.inseriRole(roleIdRoleAntigo);
+            roleIdRoleAntigo.getMenus().remove(menu);
+            roleIdRoleNovo.getMenus().add(menu);
+            roleService.inseriRole(roleIdRoleAntigo);
         }
         Menu menuAtualizado = menuService.inseriMenu(menu);
         return ResponseEntity.ok().body(menuAtualizado);
     }
 
     @DeleteMapping(value = "/menu/deletarMenu/{id}")
-    public ResponseEntity<String> deletarMenu(@PathVariable Integer id){
+    public ResponseEntity<String> deletarMenu(@PathVariable Integer id) {
         String mensagemStatus = menuService.deletarMenu(id);
         return ResponseEntity.ok().body(mensagemStatus);
     }

@@ -1,7 +1,6 @@
 package cadastrocursos.controller;
 
 import cadastrocursos.domain.Role;
-import cadastrocursos.service.MenuService;
 import cadastrocursos.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

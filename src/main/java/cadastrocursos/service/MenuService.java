@@ -1,7 +1,6 @@
 package cadastrocursos.service;
 
 import cadastrocursos.domain.Menu;
-import cadastrocursos.domain.Role;
 import cadastrocursos.exceptions.DatabaseException;
 import cadastrocursos.exceptions.ResourceNotFoundException;
 import cadastrocursos.repository.MenuRepository;
